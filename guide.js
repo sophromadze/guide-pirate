@@ -328,119 +328,110 @@ function createShipLvl2SelectItems(shipLvlSelectItems) {
 
 let selectArr = [];
 
-function createSelectDropdowns(numberOfDropdowns) {
-  document.getElementById("container").innerHTML = "";
+// Loop to create 29 custom select elements
+for (var j = 2; j <= 31; j++) {
+  // Create the custom select element
+  const customSelect = document.createElement("div");
+  customSelect.classList.add("shipLvl2");
 
-  // Loop to create 29 custom select elements
-  for (var j = 0; j <= numberOfDropdowns; j++) {
-    // Create the custom select element
-    const customSelect = document.createElement("div");
-    customSelect.classList.add("shipLvl2");
+  // Add the 'ship' class with the current value of j
+  customSelect.classList.add("ship" + j);
 
-    // Add the 'ship' class with the current value of j
-    customSelect.classList.add("ship" + j);
+  // Add the label for this select element
+  const label = document.createElement("div");
+  label.classList.add("select-label");
+  label.textContent = "LVL OF SHIP " + j;
+  customSelect.appendChild(label);
 
-    // Add the label for this select element
-    const label = document.createElement("div");
-    label.classList.add("select-label");
-    label.textContent = "LVL OF SHIP " + j;
-    customSelect.appendChild(label);
+  // Create the select element and its children
+  const select = document.createElement("div");
+  select.classList.add("custom-select");
+  const selectSelected = document.createElement("div");
+  selectSelected.classList.add("select-selected");
+  selectSelected.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+  const selectItems = document.createElement("div");
+  selectItems.classList.add("select-items");
+  const selectValue = document.createElement("input");
+  selectValue.setAttribute("type", "hidden");
+  selectValue.setAttribute("name", "select-value");
+  select.appendChild(selectSelected);
+  select.appendChild(selectItems);
+  select.appendChild(selectValue);
 
-    // Create the select element and its children
-    const select = document.createElement("div");
-    select.classList.add("custom-select");
-    const selectSelected = document.createElement("div");
-    selectSelected.classList.add("select-selected");
-    selectSelected.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
-    const selectItems = document.createElement("div");
-    selectItems.classList.add("select-items");
-    const selectValue = document.createElement("input");
-    selectValue.setAttribute("type", "hidden");
-    selectValue.setAttribute("name", "select-value");
-    select.appendChild(selectSelected);
-    select.appendChild(selectItems);
-    select.appendChild(selectValue);
+  // Create 49 select option elements and append them to the select items element
+  createShipLvl2SelectItems(selectItems);
 
-    // Create 49 select option elements and append them to the select items element
-    createShipLvl2SelectItems(selectItems);
+  // Add event listener for shipLvl2 select-option click
+  addShipLvl2SelectItemsEventListener(selectItems);
 
-    // Add event listener for shipLvl2 select-option click
-    addShipLvl2SelectItemsEventListener(selectItems);
+  // Append the select element to the custom select element
+  customSelect.appendChild(select);
 
-    // Append the select element to the custom select element
-    customSelect.appendChild(select);
-
-    // Add click event listener to the select element
-    selectSelected.addEventListener("click", function () {
-      // Check if any other custom select element has its select items visible
-      const otherSelectItems = document.querySelectorAll(
-        ".select-items.active"
-      );
-      otherSelectItems.forEach(function (otherSelectItem) {
-        otherSelectItem.classList.remove("active");
-      });
-
-      // Toggle 'active' class to show/hide the options
-      var selectItems = this.nextElementSibling;
-      selectItems.classList.toggle("active");
+  // Add click event listener to the select element
+  selectSelected.addEventListener("click", function () {
+    // Check if any other custom select element has its select items visible
+    const otherSelectItems = document.querySelectorAll(".select-items.active");
+    otherSelectItems.forEach(function (otherSelectItem) {
+      otherSelectItem.classList.remove("active");
     });
 
-    // Loop through each selectOption element and add a click event listener
-    var selectOptions = selectItems.querySelectorAll(".select-option");
-    for (var i = 0; i < selectOptions.length; i++) {
-      selectOptions[i].addEventListener("click", function () {
-        // Set the selectSelected element's text to the selected option's text
-        var value = this.getAttribute("data-value");
-        var selectSelected =
-          this.parentNode.parentNode.querySelector(".select-selected");
-        if (value === "0") {
-          selectSelected.innerHTML =
+    // Toggle 'active' class to show/hide the options
+    var selectItems = this.nextElementSibling;
+    selectItems.classList.toggle("active");
+  });
+
+  // Loop through each selectOption element and add a click event listener
+  var selectOptions = selectItems.querySelectorAll(".select-option");
+  for (var i = 0; i < selectOptions.length; i++) {
+    selectOptions[i].addEventListener("click", function () {
+      // Set the selectSelected element's text to the selected option's text
+      var value = this.getAttribute("data-value");
+      var selectSelected =
+        this.parentNode.parentNode.querySelector(".select-selected");
+      if (value === "0") {
+        selectSelected.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+      } else {
+        selectSelected.textContent = value;
+        selectSelected.innerHTML += " <i class='fas fa-chevron-down'></i>";
+      }
+      // Set the hidden input element's value to the selected option's value
+      var selectValue = this.parentNode.parentNode.querySelector(
+        'input[name="select-value"]'
+      );
+      selectValue.value = value;
+      // Remove the 'active' class from the selectItems element to hide the options
+      var selectItems = this.parentNode;
+      selectItems.classList.remove("active");
+
+      // Update the state of the custom select elements
+      updateCustomSelectsState();
+
+      // If the data-value is 0, reset the next select elements
+      if (value === "0") {
+        // Reset the value of the next select elements if the current value is changed
+        var nextCustomSelect =
+          this.parentNode.parentNode.parentNode.nextElementSibling;
+        while (
+          nextCustomSelect &&
+          nextCustomSelect.classList.contains("shipLvl2")
+        ) {
+          var nextSelectSelected =
+            nextCustomSelect.querySelector(".select-selected");
+          nextSelectSelected.innerHTML =
             "SELECT <i class='fas fa-chevron-down'></i>";
-        } else {
-          selectSelected.textContent = value;
-          selectSelected.innerHTML += " <i class='fas fa-chevron-down'></i>";
+          var nextSelectValue = nextCustomSelect.querySelector(
+            'input[name="select-value"]'
+          );
+          nextSelectValue.value = "";
+          nextCustomSelect = nextCustomSelect.nextElementSibling;
         }
-        // Set the hidden input element's value to the selected option's value
-        var selectValue = this.parentNode.parentNode.querySelector(
-          'input[name="select-value"]'
-        );
-        selectValue.value = value;
-        // Remove the 'active' class from the selectItems element to hide the options
-        var selectItems = this.parentNode;
-        selectItems.classList.remove("active");
-
-        // Update the state of the custom select elements
-        updateCustomSelectsState();
-
-        // If the data-value is 0, reset the next select elements
-        if (value === "0") {
-          // Reset the value of the next select elements if the current value is changed
-          var nextCustomSelect =
-            this.parentNode.parentNode.parentNode.nextElementSibling;
-          while (
-            nextCustomSelect &&
-            nextCustomSelect.classList.contains("shipLvl2")
-          ) {
-            var nextSelectSelected =
-              nextCustomSelect.querySelector(".select-selected");
-            nextSelectSelected.innerHTML =
-              "SELECT <i class='fas fa-chevron-down'></i>";
-            var nextSelectValue = nextCustomSelect.querySelector(
-              'input[name="select-value"]'
-            );
-            nextSelectValue.value = "";
-            nextCustomSelect = nextCustomSelect.nextElementSibling;
-          }
-        }
-      });
-    }
-
-    // Append the custom select element to the container
-    container.appendChild(customSelect);
+      }
+    });
   }
-}
 
-createSelectDropdowns();
+  // Append the custom select element to the container
+  container.appendChild(customSelect);
+}
 
 // Add event listener for shipLvl2 select-option click
 addShipLvl2SelectItemsEventListener(shipLvlSelectItems);
