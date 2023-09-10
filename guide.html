@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=JetBrains+Mono&family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+    <title>Guide</title>
+  </head>
+  <body>
+    <div class="guidePadding">
+      <img class="guideQseli" src="images/guideqseli.png" />
+      <div class="guideHeader">
+        <h1 class="guideH1">PIRATE PETS <span>GUIDE</span></h1>
+        <img class="guideVector" src="/images/guidevector.png" />
+      </div>
+      <div class="guideNavBtns">
+        <button class="active">EARN CALCULATOR</button>
+        <button>LVL UP GUIDE</button>
+        <button>VERSION UPDATE</button>
+      </div>
+      <div class="guideForm">
+        <div class="pirateShip">
+          <div class="formH51">
+            <h5>LEVEL OF YOUR PIRATE</h5>
+            <div class="pirateLvl">
+              <div class="custom-select">
+                <div class="select-selected">
+                  SELECT <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="select-items"></div>
+                <input type="hidden" name="select-value" />
+              </div>
+            </div>
+            <h6>MAIN SHIP DURABILITY %</h6>
+            <input
+              type="number"
+              id="shipNumberInput2"
+              min="0"
+              max="100"
+              placeholder="100"
+              oninput="limitInputValue(this), updateRangeSlider(this.value);"
+            />
+            <div
+              class="range-slider2"
+              style="--min: 0; --max: 100; --step: 1; --value: 100"
+            >
+              <input
+                class="rangeInput2"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value="100"
+                oninput="this.parentNode.style.setProperty('--value',this.value), updateShipNumber2(this.value); "
+              />
+              <div class="range-slider__progress2"></div>
+            </div>
+          </div>
+          <div class="formH52">
+            <h5>LEVEL OF YOUR MAIN SHIP</h5>
+            <div class="shipLvl">
+              <div class="custom-select">
+                <div class="select-selected">
+                  SELECT <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="select-items"></div>
+                <input type="hidden" name="select-value" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formH53">
+          <h5>
+            HOW MANY SHIPS DO YOU HAVE BESIDES OF MAIN ONE
+            <span>SHIPS IN FLEET </span>
+          </h5>
+          <input
+            type="number"
+            id="shipNumberInput"
+            placeholder="YOUR PIRATE'S LEVEL IS BELOW 2"
+            readonly
+          />
+          <div
+            class="range-slider"
+            style="--min: 0; --max: 29; --step: 1; --value: 0"
+          >
+            <input
+              class="rangeInput"
+              type="range"
+              min="0"
+              max="29"
+              step="1"
+              value="0"
+              oninput="this.parentNode.style.setProperty('--value',this.value), updateShipNumber(this.value); createSelectDropdowns()"
+            />
+            <div class="range-slider__progress"></div>
+          </div>
+          <div class="formH54">
+            <h4>RAID BOSSES</h4>
+            <h6 class="rbLevels">LVL 1</h6>
+            <img class="guideVector2" src="/images/guidevector2.png" />
+          </div>
+          <div class="raidBosses">
+            <div class="royalShip">
+              <div class="rbStart">
+                <img src="/images/royalship.png" />
+              </div>
+              <h6>ROYAL SHIP</h6>
+            </div>
+            <div class="hydra">
+              <div class="rbStart">
+                <img src="/images/hydra.png" />
+              </div>
+              <h6>HYDRA</h6>
+            </div>
+            <div class="calipso">
+              <div class="rbStart">
+                <img src="/images/calipso.png" />
+              </div>
+              <h6>CALIPSO</h6>
+            </div>
+            <div class="kraken">
+              <div class="rbStart">
+                <img src="/images/kraken.png" />
+              </div>
+              <h6>KRAKEN</h6>
+            </div>
+            <div class="poseidon">
+              <div class="rbStart">
+                <img src="/images/poseidon.png" />
+              </div>
+              <h6>POSEIDON</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text">
+        <p class="guideText">
+          Please choose level of your pirate and main ship, also main ship's
+          durability otherwise calculation won't work.
+        </p>
+      </div>
+      <div id="container"></div>
+      <div class="guideFullCalc">
+        <div class="dailyIncome">
+          <h6>DAILY INCOME</h6>
+          <input type="text" id="dailyIncome" readonly placeholder="0.00 PPT" />
+        </div>
+        <div class="shipFixcingPrice">
+          <h6>SHIP REPAIR PRICE</h6>
+          <input
+            type="text"
+            id="shipFixcingPrice"
+            readonly
+            placeholder="0.00 PPT"
+          />
+        </div>
+        <div class="treasureBoxes">
+          <h6>TREASURE BOXES</h6>
+          <input type="number" id="treasureBoxes" readonly placeholder="0" />
+        </div>
+      </div>
+    </div>
+
+    <script src="guide.js"></script>
+  </body>
+</html>

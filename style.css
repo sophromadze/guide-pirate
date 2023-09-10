@@ -1,0 +1,889 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(108.5deg, #242424 -5.86%, #161f44 100.57%);
+  user-select: none;
+  /* padding: 10px; */
+}
+
+.guideQseli {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  max-width: 450px;
+  z-index: -1;
+}
+
+.guideHeader {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.guideH1 {
+  font-family: "Audiowide";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 51px;
+  background: linear-gradient(180deg, #79ffbf 0%, rgba(35, 24, 100, 0.72) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 1100px;
+  max-width: 100%;
+  /* padding-left: 100px; */
+}
+
+.guideVector {
+  max-height: 12.59px;
+  height: 50%;
+  width: 50%;
+  max-width: 695.48px;
+  margin-top: 80px;
+}
+
+.guideH1 span {
+  font-family: "Audiowide";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 51px;
+  background: #79ffbf;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.guideNavBtns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.guideNavBtns button {
+  cursor: pointer;
+  height: 45px;
+  width: 195px;
+  background: linear-gradient(180deg, #1e2234 0%, rgba(5, 133, 125, 0.13) 100%);
+  border: 0.5px solid #46c7a8;
+  box-shadow: 0px 4px 5px rgba(25, 70, 100, 0.44);
+  border-radius: 12px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 15px;
+  color: rgba(4, 253, 163, 0.8);
+}
+
+.guideNavBtns .active {
+  background: linear-gradient(104.8deg, #316268 39.55%, #04fda3 115.41%);
+  border: 0.5px solid #46c7a8;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.guideNavBtns button:hover {
+  background: linear-gradient(104.8deg, #316268 39.55%, #04fda3 115.41%);
+  border: 0.5px solid #46c7a8;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.guideForm {
+  width: 100%;
+  max-width: 828px;
+  height: auto;
+  background: linear-gradient(
+    180deg,
+    rgba(84, 85, 88, 0.5) 0%,
+    rgba(69, 71, 73, 0.5) 73.96%,
+    rgba(23, 185, 137, 0.5) 100%
+  );
+  border: 0.5px solid #00ffa3;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 50px;
+  overflow: hidden;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.pirateShip {
+  display: flex;
+  gap: 30px;
+}
+
+.formH51,
+.formH52 {
+  width: 100%;
+  max-width: 116px;
+  height: auto;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: #04fda3;
+}
+
+.formH53 {
+  width: 100%;
+  max-width: 333px;
+  height: auto;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ffffff;
+}
+
+.formH51 h6 {
+  font-size: 12px;
+  width: 200px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.formH51 .select-option,
+.formH52 .select-option {
+  text-align: center;
+}
+
+.formH53 h5 {
+  margin: 50px auto;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.formH51 h5 {
+  margin-bottom: 10px;
+  margin-top: -45px;
+}
+
+.formH52 h5 {
+  margin: auto;
+  margin-top: -45px;
+  margin-bottom: 10px;
+}
+
+.formH53 > .range-slider {
+  width: 395px;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#shipNumberInput::placeholder {
+  color: rgba(121, 128, 164, 1);
+  text-align: center;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.range-slider2 {
+  width: 245px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#shipNumberInput2::placeholder {
+  color: #ffffff;
+}
+
+.formH53 span {
+  color: #04fda3;
+}
+
+#shipNumberInput {
+  cursor: default;
+  outline: none;
+  width: 395px;
+  height: 38px;
+  background: linear-gradient(180deg, #333336 0%, #4d5373 100%);
+  mix-blend-mode: normal;
+  border: 0.7px solid #00ffa3;
+  box-shadow: 0px 4px 4px rgba(30, 18, 97, 0.15);
+  border-radius: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 15px;
+  color: #ffffff;
+  padding: 10px;
+}
+
+#shipNumberInput2 {
+  cursor: default;
+  outline: none;
+  width: 245px;
+  height: 38px;
+  background: linear-gradient(180deg, #333336 0%, #4d5373 100%);
+  mix-blend-mode: normal;
+  border: 0.7px solid #00ffa3;
+  box-shadow: 0px 4px 4px rgba(30, 18, 97, 0.15);
+  border-radius: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 15px;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.range-slider {
+  --fill-color: linear-gradient(180deg, #60c8ad 0%, #253433 100%);
+  --progress-background: linear-gradient(90deg, #3f4147 0.68%, #505672 99.51%);
+  --progress-radius: 20px;
+  --track-height: calc(var(--thumb-size) / 2);
+  --thumb-size: 20px;
+  --thumb-color: #38a98f;
+  --thumb-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 2.5px 2px #125848,
+    0 0 0 2.5px #79e6cd inset, 0px 0px 0px 3px rgba(0, 255, 163, 1) inset,
+    0px 0px 15px #38a98f inset, 0px 1.5px 1px 3.5px #86ffe3 inset;
+  --step: 1;
+  --value-a: Clamp(var(--min), var(--value, 0), var(--max));
+  --value-b: var(--value, 0);
+  --completed-a: calc(
+    (var(--value-a) - var(--min)) / (var(--max) - var(--min)) * 100
+  );
+  --completed-b: calc(
+    (var(--value-b) - var(--min)) / (var(--max) - var(--min)) * 100
+  );
+  --cb: Max(var(--completed-a), var(--completed-b));
+  position: relative;
+  z-index: 1;
+}
+
+.range-slider2 {
+  --fill-color: linear-gradient(180deg, #60c8ad 0%, #253433 100%);
+  --progress-background: linear-gradient(90deg, #3f4147 0.68%, #505672 99.51%);
+  --progress-radius: 20px;
+  --track-height: calc(var(--thumb-size) / 2);
+  --thumb-size: 20px;
+  --thumb-color: #38a98f;
+  --thumb-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 2.5px 2px #125848,
+    0 0 0 2.5px #79e6cd inset, 0px 0px 0px 3px rgba(0, 255, 163, 1) inset,
+    0px 0px 15px #38a98f inset, 0px 1.5px 1px 3.5px #86ffe3 inset;
+  --step: 1;
+  --value-a: Clamp(var(--min), var(--value, 0), var(--max));
+  --value-b: var(--value, 0);
+  --completed-a: calc(
+    (var(--value-a) - var(--min)) / (var(--max) - var(--min)) * 100
+  );
+  --completed-b: calc(
+    (var(--value-b) - var(--min)) / (var(--max) - var(--min)) * 100
+  );
+  --cb: Max(var(--completed-a), var(--completed-b));
+  position: relative;
+  z-index: 1;
+}
+
+.range-slider__progress,
+.range-slider__progress2 {
+  --start-end: calc(var(--thumb-size) / 2);
+  --clip-end: calc(100% - (var(--cb)) * 1%);
+  --clip-start: calc(var(--ca) * 1%);
+  --clip: inset(-20px var(--clip-end) -20px var(--clip-start));
+  position: absolute;
+  left: var(--start-end);
+  right: var(--start-end);
+  top: calc(
+    var(--ticks-gap) * var(--flip-y, 0) + var(--thumb-size) / 2 -
+      var(--track-height) / 2
+  );
+  height: calc(var(--track-height));
+  background: var(--progress-background, #eee);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: var(--progress-radius);
+}
+.range-slider__progress::before,
+.range-slider__progress2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  -webkit-clip-path: var(--clip);
+  clip-path: var(--clip);
+  top: 0;
+  bottom: 0;
+  background: var(--fill-color, black);
+  box-shadow: var(--progress-flll-shadow);
+  z-index: 1;
+  border-radius: inherit;
+}
+.range-slider__progress::after,
+.range-slider__progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px #1b2f40;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: -1;
+}
+.range-slider > input,
+.range-slider2 > input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: var(--thumb-size);
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: -4px;
+  cursor: -webkit-grab;
+  cursor: grab;
+  outline: none;
+  background: none;
+  z-index: 2;
+}
+.range-slider > input:not(:only-of-type),
+.range-slider2 > input:not(:only-of-type) {
+  pointer-events: none;
+}
+.range-slider > input::-webkit-slider-thumb,
+.range-slider2 > input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: var(--thumb-size);
+  width: var(--thumb-size);
+  transform: var(--thumb-transform);
+  border-radius: var(--thumb-radius, 50%);
+  background: var(--thumb-color);
+  box-shadow: var(--thumb-shadow);
+  border: 0.7px solid rgba(0, 255, 163, 1);
+  pointer-events: auto;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.range-slider > input:active,
+.range-slider2 > input:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+  z-index: 2;
+}
+
+.range-slider > input:only-of-type ~ .range-slider__progress,
+.range-slider2 > input:only-of-type ~ .range-slider__progress2 {
+  --clip-start: 0;
+  border: 0.5px solid rgba(0, 255, 163, 1);
+}
+
+.formH54 {
+  width: 395px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.formH54 h4 {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  color: #ffffff;
+}
+
+.formH54 h6 {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 14px;
+  color: #00ffa3;
+}
+
+.guideVector2 {
+  max-height: 4px;
+  width: 100%;
+  max-width: 274px;
+  margin-top: 5px;
+}
+
+.raidBosses {
+  display: flex;
+  justify-content: space-between;
+  width: 395px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.raidBosses h6 {
+  color: #547f8b;
+  height: 5px;
+}
+
+.rbStart {
+  width: 48px;
+  height: 41px;
+  opacity: 0.5;
+  background: linear-gradient(
+    180deg,
+    rgba(225, 225, 225, 0.7) 0%,
+    rgba(141, 141, 141, 0.56) 77.08%,
+    rgba(66, 66, 66, 0.7) 100%
+  );
+  border: 0.5px solid #bebebe;
+  box-shadow: 0px 4px 6px #144b44, inset 0px 4px 5px #c1c1c1;
+  border-radius: 8px;
+}
+
+.rbStart.active {
+  opacity: 1;
+}
+
+.royalShip h6.active,
+.hydra h6.active,
+.calipso h6.active,
+.kraken h6.active,
+.poseidon h6.active {
+  color: #00ffa3;
+}
+
+.royalShip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.hydra {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.calipso {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.kraken {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.poseidon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.custom-select {
+  position: relative;
+  width: 108px;
+  height: 38px;
+}
+
+.select-selected {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #333336 0%, #4d5373 100%);
+  mix-blend-mode: normal;
+  border: 0.7px solid #00ffa3;
+  box-shadow: 0px 4px 4px rgba(30, 18, 97, 0.15);
+  border-radius: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.custom-select .select-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background: linear-gradient(
+    180deg,
+    rgba(106, 222, 167, 0.78) 0%,
+    rgba(54, 56, 69, 1) 100%
+  );
+  mix-blend-mode: normal;
+  border-radius: 0px 0px 10px 10px;
+  overflow-y: scroll;
+  max-height: 156px;
+  max-width: 92px;
+  display: none;
+  margin-left: 7px;
+  /* margin-top: 2px; */
+}
+
+.select-items.active {
+  display: block;
+}
+
+.select-option {
+  padding: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.select-items .select-option:not(:last-child) {
+  mix-blend-mode: normal;
+  border-bottom: 0.7px solid #7fffeb;
+}
+
+.select-items .select-option:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(47, 255, 215, 0.5) 0%,
+    rgba(47, 255, 215, 0.25) 100%
+  );
+  mix-blend-mode: normal;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.6));
+  border-radius: 0px;
+  z-index: 3;
+  border-bottom: none;
+}
+
+.select-items::-webkit-scrollbar {
+  width: 3px;
+  height: 28px;
+}
+
+.select-items::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #3b484e 0%, #549a7f 100%);
+  box-shadow: 3px 1px 8px rgba(0, 0, 0, 0.14);
+  border-radius: 3px;
+}
+
+.select-items::-webkit-scrollbar-thumb {
+  height: 28px;
+  background: #5ac1a5;
+  border-radius: 3px;
+}
+
+.select-items {
+  scrollbar-width: thin;
+  scrollbar-color: #5ac1a5 #3b484e;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.guideText {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #a8ffe18c;
+  margin: 0 auto;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  justify-items: center;
+  max-width: 843px;
+  margin: 0 auto;
+}
+
+.shipLvl2 .custom-select {
+  /* grid-column: span 6; */
+  margin-bottom: 20px;
+}
+
+.select-label {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #04fda3;
+  margin-bottom: 5px;
+}
+
+.guideFullCalc {
+  width: 100%;
+  max-width: 805px;
+  height: auto;
+  margin-top: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(106, 222, 167, 0.335) 0%,
+    rgba(54, 56, 69, 0) 100%
+  );
+  border: 0.5px solid #00ffa3;
+  border-radius: 15px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding: 30px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.guideFullCalc h6 {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 14px;
+  color: #04fda3;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.guideFullCalc input {
+  width: 221px;
+  height: 38px;
+  background: linear-gradient(180deg, #528a8a 0%, #171e35 100%);
+  mix-blend-mode: normal;
+  border: 0.7px solid #00ffa3;
+  box-shadow: 0px 4px 4px rgba(30, 18, 97, 0.15);
+  border-radius: 10px;
+  outline: none;
+  cursor: auto;
+  color: #ffffff;
+  padding: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+.guideFullCalc input::placeholder {
+  color: #ffffff;
+}
+
+.range-slider.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* For Chrome, Safari, and Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ship31 {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .guidePadding {
+    padding: 20px;
+  }
+
+  .guideH1 {
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .guideNavBtns button {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .guideH1 span {
+    font-size: 25px;
+  }
+
+  .guideForm {
+    flex-direction: column;
+    max-width: 650px;
+  }
+  .formH51,
+  .formH52,
+  .formH53,
+  .formH54 {
+    width: 100%;
+  }
+
+  .formH53 h5,
+  .formH52 h5,
+  .formH51 h5 {
+    margin-top: 0;
+  }
+  .formH54 {
+    justify-content: space-around;
+    max-width: 315px;
+  }
+
+  #shipNumberInput {
+    width: 100%;
+    max-width: 315px;
+  }
+  .formH53 > .range-slider {
+    max-width: 315px;
+    width: 100%;
+  }
+  .guideVector2 {
+    max-width: 174px;
+  }
+
+  .raidBosses {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 315px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .raidBosses > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    flex: 1;
+    margin: 5px;
+  }
+
+  #container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .guideFullCalc {
+    max-width: 650px;
+  }
+
+  .guideFullCalc input {
+    width: 315px;
+  }
+}
+
+@media (max-width: 620px) {
+  .guideH1 {
+    margin-left: 10px;
+  }
+
+  #container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .guideFullCalc {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 420px) {
+  .guideH1,
+  .guideH1 span {
+    font-size: 21px;
+  }
+
+  .guideFullCalc input {
+    width: 275px;
+  }
+}
+@media (max-width: 380px) {
+  .guideH1,
+  .guideH1 span {
+    font-size: 18px;
+  }
+  #container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .guideFullCalc input {
+    width: 225px;
+  }
+}
+
+@media (max-width: 350px) {
+  .raidBosses {
+    gap: 30px;
+    margin-bottom: 10px;
+  }
+  .formH53 h5 {
+    max-width: 250px;
+  }
+
+  #shipNumberInput {
+    max-width: 290px;
+  }
+
+  .formH53 > .range-slider {
+    max-width: 290px;
+  }
+
+  .guideVector2 {
+    max-width: 124px;
+    max-height: 2px;
+  }
+}
