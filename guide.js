@@ -28,7 +28,6 @@ var pointsMapping = {
   3: 540,
   4: 1080,
   5: 1800,
-  8: "jondi",
 };
 
 // Function to get points based on data-value
