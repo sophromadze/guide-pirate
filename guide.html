@@ -50,6 +50,7 @@
               id="shipNumberInput2"
               min="0"
               max="100"
+              step="1"
               placeholder="100"
               oninput="limitInputValue(this), updateRangeSlider(this.value);"
             />
@@ -64,7 +65,7 @@
                 max="100"
                 step="1"
                 value="100"
-                oninput="this.parentNode.style.setProperty('--value',this.value), updateShipNumber2(this.value); "
+                oninput="this.parentNode.style.setProperty('--value',this.value), updateShipNumber2(this.value), updateTreasureBoxes();"
               />
               <div class="range-slider__progress2"></div>
             </div>
@@ -104,7 +105,6 @@
               max="29"
               step="1"
               value="0"
-              oninput="this.parentNode.style.setProperty('--value',this.value), updateShipNumber(this.value);"
             />
             <div class="range-slider__progress"></div>
           </div>

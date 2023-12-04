@@ -19,7 +19,66 @@ for (var i = 0; i <= 5; i++) {
   }
   pirateLvlSelectItems.appendChild(option);
 }
+pirateLvlSelectItems.addEventListener("click", function (event) {
+  const pirateLvl = parseInt(event.target.getAttribute("data-value"), 10);
+  const rangeInput = document.querySelector(".rangeInput");
 
+  // Get the current value of the range input before changing the level
+  if (rangeInput.value !== "") {
+    lastRangeValue = parseInt(rangeInput.value, 10);
+  }
+
+  // hideAllShipLvlSelects();
+  // Hide or show ship level select elements based on the selected pirate level
+  shipLvlSelects.forEach(function (shipLvlSelect, index) {
+    // Assuming that index corresponds to the ship level - 1 (i.e., index 0 for level 1)
+    if (index + 1 <= rangeInput.value) {
+      shipLvlSelect.style.display = "block";
+    } else {
+      shipLvlSelect.style.display = "none";
+    }
+  });
+
+  // Assuming that the maximum values for levels are fixed as provided in your original code
+  const maxValues = { 1: 0, 2: 2, 3: 8, 4: 17, 5: 29 };
+  const newMax = maxValues[pirateLvl] || 0; // Get the new max or default to 0 if pirateLvl is not in maxValues
+  rangeInput.max = newMax;
+
+  // Check if the current value is within the new range
+  // If it's not, or the level is 1, set the input value to the new max
+  if (lastRangeValue > newMax || pirateLvl === 1) {
+    rangeInput.value = newMax;
+  } else {
+    // Otherwise, keep the last range value
+    rangeInput.value = lastRangeValue;
+  }
+  updateShipLvlSelectVisibility(rangeInput.value); // Add this call to update visibility based on the new range value
+
+  // Now reset the select elements that are hidden
+  resetShipLvlSelects(rangeInput.value);
+  // Update the range slider's visual properties
+  const rangeSlider = document.querySelector(".range-slider");
+  rangeSlider.style.setProperty("--max", newMax);
+  rangeSlider.style.setProperty("--value", rangeInput.value);
+
+  // Update the number input display accordingly
+  const shipNumberInput = document.getElementById("shipNumberInput");
+  if (pirateLvl === 1 || pirateLvl === 0) {
+    shipNumberInput.value = "";
+    shipNumberInput.placeholder = "YOUR PIRATE'S LEVEL IS BELOW 2";
+  } else {
+    shipNumberInput.placeholder = "";
+    shipNumberInput.value = rangeInput.value;
+  }
+
+  // Enable or disable the range input based on the level
+  setRangeInputEnabled(pirateLvl >= 2);
+
+  // resetShipLvlSelects();
+  updateTextElementVisibility();
+  updateTreasureBoxes();
+  X = sumShipLvl2Points();
+});
 // Points mapping
 var pointsMapping = {
   0: 0,
@@ -45,15 +104,13 @@ pirateLvlSelectItems.addEventListener("click", function (event) {
       event.target.textContent + ' <i class="fas fa-chevron-down"></i>';
     document.querySelector("input[name='select-value']").value = points;
   }
+  resetHiddenShipLvl2Inputs();
+  X = sumShipLvl2Points();
   // Update Y variable with the selected points
   Y = points;
-  // console.log("Updated Y value: ", Y);
+  // console.log("Pirate Point: ", Y);
   updateDailyIncome();
-
-  // Set X variable to 0
-  X = 0;
-  // console.log("Updated X value: ", X);
-  updateDailyIncome();
+  updateCustomSelectsState();
 });
 
 // Get the second custom select element
@@ -87,46 +144,46 @@ var shipLvlPointsMapping = {
   7: [85, 47],
   8: [96, 46],
   9: [108, 45],
-  10: [120, 54],
-  11: [150, 53],
-  12: [181, 52],
-  13: [213, 51],
-  14: [246, 50],
-  15: [280, 49],
-  16: [315, 48],
-  17: [351, 47],
-  18: [388, 46],
-  19: [426, 45],
-  20: [480, 54],
-  21: [630, 53],
-  22: [790, 52],
-  23: [960, 51],
-  24: [1140, 50],
-  25: [1330, 49],
-  26: [1530, 48],
-  27: [1740, 47],
-  28: [1960, 46],
-  29: [2190, 45],
-  30: [2400, 54],
-  31: [2800, 53],
-  32: [3300, 52],
-  33: [3900, 51],
-  34: [4600, 50],
-  35: [5400, 49],
-  36: [6300, 48],
-  37: [7300, 47],
-  38: [8400, 46],
-  39: [9600, 45],
-  40: [10000, 54],
-  41: [12000, 53],
-  42: [14500, 52],
-  43: [17500, 51],
-  44: [21000, 50],
-  45: [25000, 49],
-  46: [29500, 48],
-  47: [34500, 47],
-  48: [40000, 46],
-  49: [46000, 45],
+  10: [138, 54],
+  11: [173, 53],
+  12: [213, 52],
+  13: [258, 51],
+  14: [308, 50],
+  15: [363, 49],
+  16: [423, 48],
+  17: [488, 47],
+  18: [558, 46],
+  19: [633, 45],
+  20: [783, 54],
+  21: [943, 53],
+  22: [1113, 52],
+  23: [1293, 51],
+  24: [1483, 50],
+  25: [1683, 49],
+  26: [1893, 48],
+  27: [2113, 47],
+  28: [2343, 46],
+  29: [2583, 45],
+  30: [2983, 54],
+  31: [3483, 53],
+  32: [4083, 52],
+  33: [4783, 51],
+  34: [5583, 50],
+  35: [6483, 49],
+  36: [7483, 48],
+  37: [8583, 47],
+  38: [9783, 46],
+  39: [11083, 45],
+  40: [13083, 54],
+  41: [15583, 53],
+  42: [18583, 52],
+  43: [22083, 51],
+  44: [26083, 50],
+  45: [30583, 49],
+  46: [35583, 48],
+  47: [41083, 47],
+  48: [47083, 46],
+  49: [53583, 45],
 };
 
 // Function to get points based on data-value for shipLvl
@@ -149,8 +206,8 @@ shipLvlSelectItems.addEventListener("click", function (event) {
       event.target.textContent + ' <i class="fas fa-chevron-down"></i>';
     document.querySelector(".shipLvl input[name='select-value']").value =
       points.join(", ");
-    // console.log("Updated H value: ", H);
-    // console.log("Updated Z value: ", Z);
+    // console.log("Main ship point 1: ", H);
+    // console.log("Main ship point 2: ", Z);
     updateDailyIncome();
   }
 });
@@ -209,10 +266,26 @@ document.addEventListener("click", function (event) {
 // range input value
 function updateShipNumber(value) {
   document.getElementById("shipNumberInput").value = value;
-}
 
-function updateShipNumber2(value) {
-  document.getElementById("shipNumberInput2").value = value;
+  var shipLvl2Elements = document.querySelectorAll(".shipLvl2");
+
+  shipLvl2Elements.forEach(function (shipLvl2, index) {
+    var selectValueInput = shipLvl2.querySelector('input[name="select-value"]');
+    if (index + 1 > value) {
+      if (selectValueInput) {
+        selectValueInput.value = "0"; // Reset the value
+      }
+    }
+  });
+
+  // Recalculate X
+  X = sumShipLvl2Points();
+
+  // Trigger the formula recalculation.
+  updateDailyIncome();
+
+  // Update the treasure boxes.
+  updateTreasureBoxes();
 }
 
 // Get the container element for the custom selects
@@ -230,46 +303,46 @@ var shipLvl2PointsMapping = {
   7: 85,
   8: 96,
   9: 108,
-  10: 120,
-  11: 150,
-  12: 181,
-  13: 213,
-  14: 246,
-  15: 280,
-  16: 315,
-  17: 351,
-  18: 388,
-  19: 426,
-  20: 480,
-  21: 630,
-  22: 790,
-  23: 960,
-  24: 1140,
-  25: 1330,
-  26: 1530,
-  27: 1740,
-  28: 1960,
-  29: 2190,
-  30: 2400,
-  31: 2800,
-  32: 3300,
-  33: 3900,
-  34: 4600,
-  35: 5400,
-  36: 6300,
-  37: 7300,
-  38: 8400,
-  39: 9600,
-  40: 10000,
-  41: 12000,
-  42: 14500,
-  43: 17500,
-  44: 21000,
-  45: 25000,
-  46: 29500,
-  47: 34500,
-  48: 40000,
-  49: 46000,
+  10: 138,
+  11: 173,
+  12: 213,
+  13: 258,
+  14: 308,
+  15: 363,
+  16: 423,
+  17: 488,
+  18: 558,
+  19: 633,
+  20: 783,
+  21: 943,
+  22: 1113,
+  23: 1293,
+  24: 1483,
+  25: 1683,
+  26: 1893,
+  27: 2113,
+  28: 2343,
+  29: 2583,
+  30: 2983,
+  31: 3483,
+  32: 4083,
+  33: 4783,
+  34: 5583,
+  35: 6483,
+  36: 7483,
+  37: 8583,
+  38: 9783,
+  39: 11083,
+  40: 13083,
+  41: 15583,
+  42: 18583,
+  43: 22083,
+  44: 26083,
+  45: 30583,
+  46: 35583,
+  47: 41083,
+  48: 47083,
+  49: 53583,
 };
 
 // Function to sum the points for all selected ship levels
@@ -303,10 +376,20 @@ function getShipLvl2PointsFromDataValue(dataValue) {
 function addShipLvl2SelectItemsEventListener(shipLvlSelectItems) {
   shipLvlSelectItems.addEventListener("click", function (event) {
     if (event.target.classList.contains("select-option")) {
-      // Calculate the sum of all shipLvl2 points and store it in variable X
-      X = sumShipLvl2Points();
-      // console.log("Total shipLvl2 points (X): ", X);
-      updateDailyIncome();
+      var shipLvl2Element = event.target.closest(".shipLvl2");
+      if (shipLvl2Element) {
+        var selectValueInput = shipLvl2Element.querySelector(
+          'input[name="select-value"]'
+        );
+        if (selectValueInput) {
+          selectValueInput.value = event.target.getAttribute("data-value");
+          // Recalculate X
+          X = sumShipLvl2Points();
+          // console.log("Flot points:", X);
+          // Trigger the formula recalculation.
+          updateDailyIncome();
+        }
+      }
     }
   });
 }
@@ -327,6 +410,152 @@ function createShipLvl2SelectItems(shipLvlSelectItems) {
 }
 
 let selectArr = [];
+
+// axali funqcia yvela flotis gemze ertad zemoqmedebistvis
+
+// Create the master select element (similar to individual ship level selects)
+const masterSelect = document.createElement("div");
+masterSelect.classList.add("shipLvlMaster");
+
+// Add the label for this select element
+const masterLabel = document.createElement("div");
+masterLabel.classList.add("select-label");
+masterLabel.textContent = "SET SAME LVL TO ALL SHIPS";
+masterSelect.appendChild(masterLabel);
+
+// Create the select element and its children for master control
+const masterSelectContainer = document.createElement("div");
+masterSelectContainer.classList.add("custom-select");
+
+const masterSelectSelected = document.createElement("div");
+masterSelectSelected.classList.add("select-selected");
+masterSelectSelected.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+
+const masterSelectItems = document.createElement("div");
+masterSelectItems.classList.add("select-items");
+
+// Create the hidden input for master select to hold the value
+const masterSelectValue = document.createElement("input");
+masterSelectValue.setAttribute("type", "hidden");
+masterSelectValue.setAttribute("name", "master-select-value");
+
+// Append the children to the master select container
+masterSelectContainer.appendChild(masterSelectSelected);
+masterSelectContainer.appendChild(masterSelectItems);
+masterSelectContainer.appendChild(masterSelectValue);
+
+// Append the master select container to the masterSelect
+masterSelect.appendChild(masterSelectContainer);
+
+// Function to populate the master select options, it should be defined somewhere in your code
+// This should create elements with class 'select-option' and an attribute 'data-value'
+createShipLvl2SelectItems(masterSelectItems); // Assuming this function creates option elements
+
+// Append the master select element to the container
+container.appendChild(masterSelect);
+
+// Assume that masterSelectItems is the container for your option elements
+// Click event listener for each master select option
+masterSelectItems.querySelectorAll(".select-option").forEach((selectOption) => {
+  selectOption.addEventListener("click", function () {
+    const value = this.getAttribute("data-value");
+
+    // Set the selected value on the master select and close the dropdown
+    updateSelectSelected(masterSelectSelected, value);
+    masterSelectValue.value = value;
+    masterSelectItems.classList.remove("active");
+
+    // Update all other ship level selects
+    updateAllShipLvl2Selects(value);
+
+    // After all updates, call the functions to update daily income and treasure boxes
+    updateDailyIncome();
+    updateTreasureBoxes();
+  });
+});
+
+function updateSelectSelected(selectSelectedElement, value) {
+  if (value === "0") {
+    selectSelectedElement.innerHTML =
+      "SELECT <i class='fas fa-chevron-down'></i>";
+  } else {
+    selectSelectedElement.textContent = value; // This sets the text only, without HTML
+    selectSelectedElement.innerHTML += " <i class='fas fa-chevron-down'></i>"; // This appends the HTML
+  }
+}
+
+// Click event listener for master select to toggle dropdown
+masterSelectSelected.addEventListener("click", function () {
+  this.nextSibling.classList.toggle("active");
+});
+
+function updateAllShipLvl2Selects(newValue) {
+  const shipLvlSelects = document.querySelectorAll(
+    ".shipLvl2 .select-selected"
+  );
+  let lastVisibleIndex = -1; // Store the index of the last visible .shipLvl2 element
+
+  shipLvlSelects.forEach((select, index) => {
+    const shipLvl2Element = select.closest(".shipLvl2");
+    const style = window.getComputedStyle(shipLvl2Element);
+    const hiddenInput = select.nextElementSibling.nextElementSibling;
+
+    // If the element is not displayed, don't update its value, skip to the next
+    if (style.display === "none") {
+      if (newValue === "0") {
+        // Ensure that hidden elements are reset to default state
+        hiddenInput.value = "0";
+        select.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+        shipLvl2Element.style.opacity = "0.5";
+        shipLvl2Element.style.pointerEvents = "none";
+      }
+      return; // Continue to next iteration
+    }
+
+    // Update the value of visible elements
+    hiddenInput.value = newValue;
+    if (newValue === "0") {
+      select.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+      if (index !== 0) {
+        shipLvl2Element.style.opacity = "0.5";
+        shipLvl2Element.style.pointerEvents = "none";
+      }
+    } else {
+      select.textContent = newValue;
+      select.innerHTML += " <i class='fas fa-chevron-down'></i>";
+      shipLvl2Element.style.opacity = "";
+      shipLvl2Element.style.pointerEvents = "";
+    }
+
+    lastVisibleIndex = index; // Update the last visible index
+  });
+
+  // If there's at least one visible element and newValue is not "0", update the next sibling of the last visible element
+  if (lastVisibleIndex !== -1 && newValue !== "0") {
+    const lastVisibleElement =
+      shipLvlSelects[lastVisibleIndex].closest(".shipLvl2");
+    const nextSibling = lastVisibleElement.nextElementSibling;
+    if (
+      nextSibling &&
+      window.getComputedStyle(nextSibling).display === "none"
+    ) {
+      nextSibling.style.opacity = ""; // Reset the opacity to default
+      nextSibling.style.pointerEvents = ""; // Reset the pointer events to default
+    }
+  }
+
+  // After updating the values, recalculate X and update the UI accordingly
+  X = sumShipLvl2Points();
+  // console.log("axali racxa", X);
+  updateDailyIncome();
+  updateTreasureBoxes();
+  updateCustomSelectsState();
+}
+
+// Helper flag to keep track if we have processed an additional hidden element
+let additionalHiddenProcessed = false;
+
+// aq vamtavreb
 
 // Loop to create 29 custom select elements
 for (var j = 2; j <= 31; j++) {
@@ -368,16 +597,37 @@ for (var j = 2; j <= 31; j++) {
   customSelect.appendChild(select);
 
   // Add click event listener to the select element
-  selectSelected.addEventListener("click", function () {
-    // Check if any other custom select element has its select items visible
+  selectSelected.addEventListener("click", function (e) {
+    // Prevents the event from bubbling up to the document
+    e.stopPropagation();
+
+    // Close all other dropdowns except the current one
     const otherSelectItems = document.querySelectorAll(".select-items.active");
-    otherSelectItems.forEach(function (otherSelectItem) {
-      otherSelectItem.classList.remove("active");
-    });
+    otherSelectItems.forEach(
+      function (otherSelectItem) {
+        if (otherSelectItem !== this.nextElementSibling) {
+          otherSelectItem.classList.remove("active");
+        }
+      }.bind(this)
+    ); // The bind(this) is important to make sure 'this' refers to selectSelected inside the function
 
     // Toggle 'active' class to show/hide the options
     var selectItems = this.nextElementSibling;
     selectItems.classList.toggle("active");
+  });
+
+  // Event listener to close all select elements when clicking outside them
+  document.addEventListener("click", function (e) {
+    // Check if the click is not on one of the custom selects or any of its descendants
+    if (!e.target.closest(".custom-select")) {
+      // If it's outside, close all dropdowns
+      const allActiveSelectItems = document.querySelectorAll(
+        ".select-items.active"
+      );
+      allActiveSelectItems.forEach(function (activeSelectItem) {
+        activeSelectItem.classList.remove("active");
+      });
+    }
   });
 
   // Loop through each selectOption element and add a click event listener
@@ -433,73 +683,135 @@ for (var j = 2; j <= 31; j++) {
   container.appendChild(customSelect);
 }
 
+// Function to check the display style of .ship3 and hide .shipLvlMaster accordingly
+function checkShip3AndToggleMasterVisibility() {
+  const ship3 = document.querySelector(".ship3");
+  const shipLvlMaster = document.querySelector(".shipLvlMaster");
+  const masterSelectSelected = document.querySelector(
+    ".shipLvlMaster .select-selected"
+  );
+  const masterSelectValue = document.querySelector(
+    'input[name="master-select-value"]'
+  );
+
+  // Ensure the elements exist
+  if (ship3 && shipLvlMaster) {
+    const style = window.getComputedStyle(ship3);
+    // If .ship3 is not displayed, hide .shipLvlMaster and reset its value
+    if (style.display === "none") {
+      shipLvlMaster.style.display = "none";
+      resetMasterSelect(masterSelectSelected, masterSelectValue);
+    } else {
+      // Else, show .shipLvlMaster (or apply any other required style)
+      shipLvlMaster.style.display = ""; // or 'block'/'flex' depending on your layout
+    }
+  }
+}
+
+document
+  .querySelectorAll(".shipLvl2 .select-items .select-option")
+  .forEach((option, index) => {
+    option.addEventListener("click", function () {
+      const selectedValue = this.getAttribute("data-value");
+      const masterSelectValueElement = document.querySelector(
+        'input[name="master-select-value"]'
+      );
+      const masterValue = masterSelectValueElement.value;
+      const currentSelectValueElement = this.closest(
+        ".custom-select"
+      ).querySelector('input[name="select-value"]');
+      const currentValue = currentSelectValueElement.value;
+
+      // Condition 4: Check if the selected value is the same as the master and the current value is 0
+      if (selectedValue === masterValue && currentValue === "0") {
+        // Don't reset the master select
+        return;
+      }
+
+      // Condition 2: If the first shipLvl2 element's value is set to 0, then reset the master
+      if (index === 0 && selectedValue === "0") {
+        resetMasterSelect(masterSelectValueElement, true);
+      }
+
+      // Condition 3: If any shipLvl2 element has a non-zero value different from the master's, then reset the master
+      if (selectedValue !== masterValue && selectedValue !== "0") {
+        resetMasterSelect(masterSelectValueElement, true);
+      }
+    });
+  });
+
+function resetMasterSelect(selectValueElement, setToZero) {
+  const masterSelectSelected = document.querySelector(
+    ".shipLvlMaster .select-selected"
+  );
+
+  if (setToZero) {
+    selectValueElement.value = "0";
+    masterSelectSelected.innerHTML =
+      "SELECT <i class='fas fa-chevron-down'></i>";
+  }
+}
+
+// Initial check when the script loads
+checkShip3AndToggleMasterVisibility();
+
+// Function to observe changes and toggle visibility of .shipLvlMaster
+function observeChanges() {
+  const ship3 = document.querySelector(".ship3");
+  const shipLvlMaster = document.querySelector(".shipLvlMaster");
+  if (!ship3 || !shipLvlMaster) return;
+
+  // Create an observer instance
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === "style") {
+        checkShip3AndToggleMasterVisibility();
+      }
+    });
+  });
+
+  // Observe the .ship3 for changes in the 'style' attribute
+  observer.observe(ship3, {
+    attributes: true,
+    attributeFilter: ["style"],
+  });
+}
+
+// Call observeChanges to set up the observer
+observeChanges();
+
 // Add event listener for shipLvl2 select-option click
 addShipLvl2SelectItemsEventListener(shipLvlSelectItems);
 
-// Add event listener for the pirateLvlSelectItems element
-pirateLvlSelectItems.addEventListener("click", function (event) {
-  const pirateLvl = parseInt(event.target.getAttribute("data-value"), 10);
-  const rangeInput = document.querySelector(".rangeInput");
-  const rangeSlider = document.querySelector(".range-slider");
+function resetHiddenShipLvl2Inputs() {
+  var rangeInput = document.querySelector(".rangeInput");
+  var maxAllowedValue = parseInt(rangeInput.value, 10); // Get the max allowed value from your range input
 
-  hideAllShipLvlSelects();
+  // Loop through all shipLvl2 elements
+  var shipLvl2Elements = document.querySelectorAll(".shipLvl2");
+  shipLvl2Elements.forEach(function (shipLvl2Element, index) {
+    // If the shipLvl2 element is beyond the max allowed value and thus will be hidden
+    if (index >= maxAllowedValue) {
+      // Reset the input value to 0
+      var input = shipLvl2Element.querySelector('input[name="select-value"]');
+      if (input) {
+        input.value = "0";
+      }
 
-  switch (pirateLvl) {
-    case 1:
-      rangeInput.max = 0;
-      rangeSlider.style.setProperty("--max", 0);
-      document.getElementById("shipNumberInput").value = "";
-      document.getElementById("shipNumberInput").placeholder =
-        "YOUR PIRATE'S LEVEL IS BELOW 2";
-      break;
-    case 2:
-      rangeInput.max = 2;
-      rangeSlider.style.setProperty("--max", 2);
-      document.getElementById("shipNumberInput").placeholder = "";
-      document.getElementById("shipNumberInput").value = 0;
-      break;
-    case 3:
-      rangeInput.max = 8;
-      rangeSlider.style.setProperty("--max", 8);
-      document.getElementById("shipNumberInput").placeholder = "";
-      document.getElementById("shipNumberInput").value = 0;
-      break;
-    case 4:
-      rangeInput.max = 18;
-      rangeSlider.style.setProperty("--max", 18);
-      document.getElementById("shipNumberInput").placeholder = "";
-      document.getElementById("shipNumberInput").value = 0;
-      break;
-    case 5:
-      rangeInput.max = 29;
-      rangeSlider.style.setProperty("--max", 29);
-      document.getElementById("shipNumberInput").placeholder = "";
-      document.getElementById("shipNumberInput").value = 0;
-      break;
-    default:
-      rangeInput.max = 0;
-      rangeSlider.style.setProperty("--max", 0);
-      document.getElementById("shipNumberInput").value = "";
-      document.getElementById("shipNumberInput").placeholder =
-        "YOUR PIRATE'S LEVEL IS BELOW 2";
-      break;
-  }
+      // Update the display to show "SELECT"
+      var selectSelected = shipLvl2Element.querySelector(".select-selected");
+      if (selectSelected) {
+        selectSelected.innerHTML = "SELECT <i class='fas fa-chevron-down'></i>";
+      }
+    }
+  });
+}
 
-  // // Reset the range input value and the progress bar
-  rangeInput.value = 0;
-  rangeSlider.style.setProperty("--value", 0);
+// aqedan
+// Variable to keep track of the last range value before the level changes
+let lastRangeValue = 0;
 
-  // document.getElementById("shipNumberInput").value = 0;
-
-  if (pirateLvl >= 2) {
-    setRangeInputEnabled(true);
-  } else {
-    setRangeInputEnabled(false);
-  }
-
-  resetShipLvlSelects();
-  updateTextElementVisibility();
-});
+// aqamde
 
 // Get all ship level custom select elements
 var shipLvlSelects = document.querySelectorAll(".shipLvl2");
@@ -563,30 +875,41 @@ if (shipLvlSelects.length > 0) {
   shipLvlSelects[0].style.display = "none";
 }
 
-function hideAllShipLvlSelects() {
-  shipLvlSelects.forEach(function (shipLvlSelect) {
-    shipLvlSelect.style.display = "none";
+// function hideAllShipLvlSelects() {
+//   shipLvlSelects.forEach(function (shipLvlSelect) {
+//     shipLvlSelect.style.display = "none";
+//   });
+// }
+
+function updateShipLvlSelectVisibility(maxAllowedValue) {
+  shipLvlSelects.forEach(function (shipLvlSelect, index) {
+    if (index + 1 <= maxAllowedValue) {
+      shipLvlSelect.style.display = "block";
+    } else {
+      shipLvlSelect.style.display = "none";
+    }
   });
 }
 
-function resetShipLvlSelects() {
+function resetShipLvlSelects(maxAllowedValue) {
   // Get all .shipLvl2 .select-selected elements
   var shipLvlSelectSelecteds = document.querySelectorAll(
     ".shipLvl2 .select-selected"
   );
 
-  // Loop through each .shipLvl2 .select-selected element and reset its content
-  shipLvlSelectSelecteds.forEach(function (shipLvlSelectSelected) {
-    shipLvlSelectSelected.innerHTML =
-      "SELECT <i class='fas fa-chevron-down'></i>";
-  });
-
-  // Loop through each .shipLvl2 custom-select element and reset the hidden input value
-  var shipLvlCustomSelects = document.querySelectorAll(
-    ".shipLvl2 .custom-select"
-  );
-  shipLvlCustomSelects.forEach(function (shipLvlCustomSelect) {
-    shipLvlCustomSelect.querySelector('input[name="select-value"]').value = "";
+  shipLvlSelectSelecteds.forEach(function (shipLvlSelectSelected, index) {
+    // Only reset selects that are beyond the maxAllowedValue
+    if (index >= maxAllowedValue) {
+      shipLvlSelectSelected.innerHTML =
+        "SELECT <i class='fas fa-chevron-down'></i>";
+      // Also reset the corresponding hidden input for this select
+      var hiddenInput = shipLvlSelectSelected.nextElementSibling.querySelector(
+        'input[name="select-value"]'
+      );
+      if (hiddenInput) {
+        hiddenInput.value = "";
+      }
+    }
   });
 }
 
@@ -629,14 +952,14 @@ function updateTextElementVisibility() {
 }
 
 function limitInputValue(inputField) {
-  if (inputField.value === "") {
+  let inputValue = parseInt(inputField.value);
+
+  if (isNaN(inputValue) || inputValue < 0) {
     inputField.value = 0;
-  }
-  if (parseInt(inputField.value) > 100) {
+  } else if (inputValue > 100) {
     inputField.value = 100;
-  }
-  if (parseInt(inputField.value) < 0) {
-    inputField.value = 0;
+  } else {
+    inputField.value = inputValue; // Removes leading zeros and fractional parts
   }
 }
 
@@ -650,7 +973,7 @@ function updateRangeSlider(value) {
 
   var percentage = 1; // Change this value to the desired percentage
   D = calculatePercentage(value, percentage);
-  // console.log("Variable D:", D);
+  updateDailyIncome();
 }
 
 function updateShipNumber2(value) {
@@ -658,7 +981,7 @@ function updateShipNumber2(value) {
 
   var percentage = 1; // Change this value to the desired percentage
   D = calculatePercentage(value, percentage);
-  // console.log("Variable D:", D);
+  // console.log("Durability:", D);
   updateDailyIncome();
 }
 
@@ -684,6 +1007,7 @@ function updateCustomSelectsState() {
       disableSelect(shipLvlSelect); // Disable the select element
     }
   });
+
   let shipLvlDataValue = false;
 
   const shipLvlSelect = document.querySelector(".shipLvl .select-selected");
@@ -699,73 +1023,43 @@ function updateCustomSelectsState() {
     shipLvlDataValue = true;
   }
 
-  // Check if .ship4 opacity is more than 0.5
-  const ship4 = document.querySelector(".ship4");
-  const ship4Opacity = parseFloat(window.getComputedStyle(ship4).opacity);
+  // Assuming your .ship3, .ship9, .ship18, and .ship30 selectors are similarly structured to .ship4
+  const shipLevelValue = (shipSelector) => {
+    const hiddenInput = document.querySelector(
+      shipSelector + ' input[name="select-value"]'
+    );
+    return hiddenInput ? parseInt(hiddenInput.value, 10) : 0;
+  };
 
-  // Check if .ship10 opacity is more than 0.5
-  const ship10 = document.querySelector(".ship10");
-  const ship10Opacity = parseFloat(window.getComputedStyle(ship10).opacity);
+  // Add or remove .active class based on ship level values
+  const updateActiveClasses = (
+    shipSelector,
+    rbStartSelector,
+    rbStartH6Selector
+  ) => {
+    const shipValue = shipLevelValue(shipSelector);
+    const rbStart = document.querySelector(rbStartSelector);
+    const rbStartH6 = document.querySelector(rbStartH6Selector);
 
-  // Check if .ship19 opacity is more than 0.5
-  const ship19 = document.querySelector(".ship19");
-  const ship19Opacity = parseFloat(window.getComputedStyle(ship19).opacity);
+    // Since shipLvlDataValue is dependent on shipLvlValue, we need to check this condition inside this function
+    const shipLvlSelect = document.querySelector(".shipLvl .select-selected");
+    const shipLvlValue = shipLvlSelect.textContent.trim();
+    let shipLvlDataValue = ["9", "19", "29", "39", "49"].includes(shipLvlValue);
 
-  // Check if .ship31 opacity is more than 0.5
-  const ship31 = document.querySelector(".ship31");
-  const ship31Opacity = parseFloat(window.getComputedStyle(ship31).opacity);
+    if (shipValue > 0 && shipLvlDataValue) {
+      rbStart.classList.add("active");
+      rbStartH6.classList.add("active");
+    } else {
+      rbStart.classList.remove("active");
+      rbStartH6.classList.remove("active");
+    }
+  };
 
-  // Get .hydra .rbStart and its h6 elements
-  const rbStart = document.querySelector(".hydra .rbStart");
-  const rbStartH6 = document.querySelector(".hydra h6");
-
-  // Get .calipso .rbStart and its h6 elements
-  const rbStartcalipso = document.querySelector(".calipso .rbStart");
-  const rbStartH6calipso = document.querySelector(".calipso h6");
-
-  // Get .kraken .rbStart and its h6 elements
-  const rbStartkraken = document.querySelector(".kraken .rbStart");
-  const rbStartH6kraken = document.querySelector(".kraken h6");
-
-  // Get .poseidon .rbStart and its h6 elements
-  const rbStartposeidon = document.querySelector(".poseidon .rbStart");
-  const rbStartH6poseidon = document.querySelector(".poseidon h6");
-
-  // Add or remove .active class based on ship4Opacity and shipLvlDataValue
-  if (ship4Opacity > 0.5 && shipLvlDataValue) {
-    rbStart.classList.add("active");
-    rbStartH6.classList.add("active");
-  } else {
-    rbStart.classList.remove("active");
-    rbStartH6.classList.remove("active");
-  }
-
-  // Add or remove .active class based on ship10Opacity and shipLvlDataValue
-  if (ship10Opacity > 0.5 && shipLvlDataValue) {
-    rbStartcalipso.classList.add("active");
-    rbStartH6calipso.classList.add("active");
-  } else {
-    rbStartcalipso.classList.remove("active");
-    rbStartH6calipso.classList.remove("active");
-  }
-
-  // Add or remove .active class based on ship19Opacity and shipLvlDataValue
-  if (ship19Opacity > 0.5 && shipLvlDataValue) {
-    rbStartkraken.classList.add("active");
-    rbStartH6kraken.classList.add("active");
-  } else {
-    rbStartkraken.classList.remove("active");
-    rbStartH6kraken.classList.remove("active");
-  }
-
-  // Add or remove .active class based on ship31Opacity and shipLvlDataValue
-  if (ship31Opacity > 0.5 && shipLvlDataValue) {
-    rbStartposeidon.classList.add("active");
-    rbStartH6poseidon.classList.add("active");
-  } else {
-    rbStartposeidon.classList.remove("active");
-    rbStartH6poseidon.classList.remove("active");
-  }
+  // Now call updateActiveClasses for each ship level where required
+  updateActiveClasses(".shipLvl2.ship3", ".hydra .rbStart", ".hydra h6");
+  updateActiveClasses(".shipLvl2.ship9", ".calipso .rbStart", ".calipso h6");
+  updateActiveClasses(".shipLvl2.ship18", ".kraken .rbStart", ".kraken h6");
+  updateActiveClasses(".shipLvl2.ship30", ".poseidon .rbStart", ".poseidon h6");
 }
 
 // Function to disable a custom select
@@ -781,7 +1075,7 @@ function enableSelect(customSelect) {
 }
 
 // Initialize the state of the custom select elements
-updateCustomSelectsState();
+// updateCustomSelectsState();
 
 // Add click event listener to the .shipLvl .select-option elements
 const shipLvlSelectOptions = document.querySelectorAll(
@@ -822,10 +1116,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (
       (pirateLvl >= 1 && shipLvl === 9) ||
-      shipLvl === 19 ||
-      shipLvl === 29 ||
-      shipLvl === 39 ||
-      shipLvl === 49
+      (pirateLvl >= 1 && shipLvl === 19) ||
+      (pirateLvl >= 1 && shipLvl === 29) ||
+      (pirateLvl >= 1 && shipLvl === 39) ||
+      (pirateLvl >= 1 && shipLvl === 49)
     ) {
       royalShipRBStart.classList.add("active");
       royalShipH6.classList.add("active");
@@ -913,6 +1207,18 @@ function updateDailyIncome() {
     document.getElementById("shipFixcingPrice").value = "0.00 PPT";
   } else {
     let dailyIncomeInput = ((Y + H + X) / Z) * D;
+    // console.log(
+    //   "pirate points:",
+    //   Y,
+    //   "main ship first points:",
+    //   H,
+    //   "main ship second points:",
+    //   Z,
+    //   "flotis pointebis jami:",
+    //   X,
+    //   "durability:",
+    //   D
+    // );
     document.getElementById("dailyIncome").value =
       dailyIncomeInput.toFixed(2) + " PPT";
 
@@ -923,29 +1229,9 @@ function updateDailyIncome() {
   }
 }
 
-// function updateShipNumber(value) {
-//   const shipNumberInput = document.getElementById("shipNumberInput");
-
-//   if (shipNumberInput) {
-//     shipNumberInput.value = value;
-//     shipNumberInput.placeholder = value;
-//     console.log("shipNumberInput value:", value);
-//   }
-// }
-
 //  treasure boxes
 function getComputedStyleValue(element, property) {
   return window.getComputedStyle(element).getPropertyValue(property);
-}
-
-function resetContainerValues() {
-  const shipElements = document.querySelectorAll(
-    "#container .ship4, #container .ship10, #container .ship19, #container .ship31"
-  );
-
-  shipElements.forEach((ship) => {
-    ship.style.opacity = 0;
-  });
 }
 
 function updateTreasureBoxText(value) {
@@ -972,9 +1258,10 @@ function updateTreasureBoxes() {
   const shipLvl = document.querySelector(
     '.shipLvl input[name="select-value"]'
   ).value;
+  const durability = document.querySelector(".rangeInput2").value;
 
   // Check if either pirateLvl or shipLvl is 0
-  if (pirateLvl == 0 || shipLvl == 0) {
+  if (pirateLvl == 0 || shipLvl == 0 || durability == 0) {
     updateTreasureBoxText("");
     document.getElementById("treasureBoxes").value = 0;
     return;
@@ -995,6 +1282,22 @@ function updateTreasureBoxes() {
     document.querySelector("#container .ship31"),
     "opacity"
   );
+  const ship4display = getComputedStyleValue(
+    document.querySelector("#container .ship3"),
+    "display"
+  );
+  const ship10display = getComputedStyleValue(
+    document.querySelector("#container .ship9"),
+    "display"
+  );
+  const ship19display = getComputedStyleValue(
+    document.querySelector("#container .ship18"),
+    "display"
+  );
+  const ship31display = getComputedStyleValue(
+    document.querySelector("#container .ship30"),
+    "display"
+  );
 
   let treasureBoxesValue = 0;
 
@@ -1002,80 +1305,80 @@ function updateTreasureBoxes() {
     treasureBoxesValue = 10;
     updateTreasureBoxText("COMMON");
 
-    if (ship4Opacity > 0.5) {
+    if (ship4Opacity > 0.5 && ship4display != "none") {
       treasureBoxesValue = 20;
     }
-    if (ship10Opacity > 0.5) {
+    if (ship10Opacity > 0.5 && ship10display != "none") {
       treasureBoxesValue = 45;
     }
-    if (ship19Opacity > 0.5) {
+    if (ship19Opacity > 0.5 && ship19display != "none") {
       treasureBoxesValue = 70;
     }
-    if (ship31Opacity > 0.5) {
+    if (ship31Opacity > 0.5 && ship31display != "none") {
       treasureBoxesValue = 100;
     }
   } else if (pirateLvl >= 1 && shipLvl >= 10 && shipLvl <= 19) {
     treasureBoxesValue = 15;
     updateTreasureBoxText("UNCOMMON");
 
-    if (ship4Opacity > 0.5) {
+    if (ship4Opacity > 0.5 && ship4display != "none") {
       treasureBoxesValue = 25;
     }
-    if (ship10Opacity > 0.5) {
+    if (ship10Opacity > 0.5 && ship10display != "none") {
       treasureBoxesValue = 50;
     }
-    if (ship19Opacity > 0.5) {
+    if (ship19Opacity > 0.5 && ship19display != "none") {
       treasureBoxesValue = 75;
     }
-    if (ship31Opacity > 0.5) {
+    if (ship31Opacity > 0.5 && ship31display != "none") {
       treasureBoxesValue = 105;
     }
   } else if (pirateLvl >= 1 && shipLvl >= 20 && shipLvl <= 29) {
     treasureBoxesValue = 20;
     updateTreasureBoxText("RARE");
 
-    if (ship4Opacity > 0.5) {
+    if (ship4Opacity > 0.5 && ship4display != "none") {
       treasureBoxesValue = 30;
     }
-    if (ship10Opacity > 0.5) {
+    if (ship10Opacity > 0.5 && ship10display != "none") {
       treasureBoxesValue = 55;
     }
-    if (ship19Opacity > 0.5) {
+    if (ship19Opacity > 0.5 && ship19display != "none") {
       treasureBoxesValue = 80;
     }
-    if (ship31Opacity > 0.5) {
+    if (ship31Opacity > 0.5 && ship31display != "none") {
       treasureBoxesValue = 110;
     }
   } else if (pirateLvl >= 1 && shipLvl >= 30 && shipLvl <= 39) {
     treasureBoxesValue = 25;
     updateTreasureBoxText("EPIC");
 
-    if (ship4Opacity > 0.5) {
+    if (ship4Opacity > 0.5 && ship4display != "none") {
       treasureBoxesValue = 35;
     }
-    if (ship10Opacity > 0.5) {
+    if (ship10Opacity > 0.5 && ship10display != "none") {
       treasureBoxesValue = 60;
     }
-    if (ship19Opacity > 0.5) {
+    if (ship19Opacity > 0.5 && ship19display != "none") {
       treasureBoxesValue = 85;
     }
-    if (ship31Opacity > 0.5) {
+    if (ship31Opacity > 0.5 && ship31display != "none") {
       treasureBoxesValue = 115;
     }
   } else if (pirateLvl >= 1 && shipLvl >= 40 && shipLvl <= 49) {
     treasureBoxesValue = 30;
     updateTreasureBoxText("LEGENDARY");
 
-    if (ship4Opacity > 0.5) {
+    if (ship4Opacity > 0.5 && ship4display != "none") {
       treasureBoxesValue = 40;
     }
-    if (ship10Opacity > 0.5) {
+    if (ship10Opacity > 0.5 && ship10display != "none") {
       treasureBoxesValue = 65;
     }
-    if (ship19Opacity > 0.5) {
+    if (ship19Opacity > 0.5 && ship19display != "none") {
       treasureBoxesValue = 90;
     }
-    if (ship31Opacity > 0.5) {
+    if (ship31Opacity > 0.5 && ship31display != "none") {
       treasureBoxesValue = 120;
     }
   } else {
@@ -1093,11 +1396,6 @@ selectItems2.forEach((item, index) => {
     const input = item.nextElementSibling;
     input.value = selectValue;
 
-    if (index === 0) {
-      // pirateLvl select-item
-      resetContainerValues();
-    }
-
     updateTreasureBoxes();
   });
 });
@@ -1110,7 +1408,12 @@ shipElements.forEach((ship) => {
   ship.addEventListener("change", updateTreasureBoxes);
 });
 
-// const inter = setInterval(() => {
-//   updateDailyIncome();
-//   console.log("interval");
-// }, 100);
+document.addEventListener("DOMContentLoaded", function () {
+  const rangeInput = document.querySelector(".rangeInput");
+
+  rangeInput.addEventListener("input", function () {
+    const value = this.value;
+    this.parentNode.style.setProperty("--value", value);
+    updateShipNumber(value);
+  });
+});

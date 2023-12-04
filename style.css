@@ -117,7 +117,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 30px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   overflow: hidden;
   padding: 20px;
   flex-wrap: wrap;
@@ -231,7 +231,7 @@ body {
 }
 
 #shipNumberInput2 {
-  cursor: default;
+  cursor: text;
   outline: none;
   width: 245px;
   height: 38px;
@@ -633,12 +633,27 @@ body {
 #container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  align-items: center;
+  grid-gap: 20px; /* Adjust gap as needed */
+  align-items: start; /* Align items to the start of the container */
   justify-content: center;
   text-align: center;
   justify-items: center;
   max-width: 843px;
   margin: 0 auto;
+}
+
+.shipLvlMaster {
+  grid-column: 1 / -1; /* Span across all columns */
+  justify-self: center; /* Center it horizontally */
+  z-index: 1; /* Ensure it's above other elements */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shipLvlMaster:first-child {
+  max-width: 100px;
 }
 
 .shipLvl2 .custom-select {
@@ -819,7 +834,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 650px) {
   .guideH1 {
     margin-left: 10px;
   }
@@ -836,7 +851,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 515px) {
   #container {
     grid-template-columns: repeat(3, 1fr);
   }
